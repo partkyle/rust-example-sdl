@@ -1,0 +1,8 @@
+[package]
+
+name = "rust-example-sdl"
+version = "0.0.1"
+authors = ["Kyle Partridge <kyle.partridge@sendgrid.com>"]
+
+[dependencies]
+sdl2 = "0.0.18"
