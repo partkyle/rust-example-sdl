@@ -13,6 +13,10 @@ use std::mem::swap;
 
 use sdl2::video::FullscreenType::{FTDesktop, FTOff};
 
+struct Cell {
+    colorIndex: uint,
+}
+
 pub fn main() {
     sdl2::init(sdl2::INIT_VIDEO);
 
@@ -29,16 +33,16 @@ pub fn main() {
     let debugColor = Color::RGB(255, 0, 255);
     let mut colors = [Color::RGB(255, 0, 0), Color::RGB(0, 0, 255)];
 
-    let mut grid: [[uint; 5]; 5] = [[0, 0, 0, 0, 0],
-                                    [0, 0, 0, 0, 0],
-                                    [0, 0, 0, 0, 0],
-                                    [0, 0, 0, 0, 0],
-                                    [0, 0, 0, 0, 0]];
+    let mut grid = [[Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}],
+                    [Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}],
+                    [Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}],
+                    [Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}],
+                    [Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}, Cell{colorIndex: 0}]];
 
     for (y, row) in grid.iter_mut().enumerate() {
         for (x, cell) in row.iter_mut().enumerate() {
             if x == y {
-                *cell = 1u;
+                cell.colorIndex = 1u;
             }
         }
     }
@@ -92,8 +96,7 @@ pub fn main() {
             for (x, cell) in row.iter().enumerate() {
                 let r = Rect{x: (x as i32) * width, y: (y as i32) * height, w: width, h: height};
 
-                println!("{}", cell);
-                renderer.set_draw_color(colors[*cell]);
+                renderer.set_draw_color(colors[cell.colorIndex]);
                 let _ = renderer.fill_rect(&r);
             }
         }
